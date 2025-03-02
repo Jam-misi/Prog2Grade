@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Calculator</title>
+    <style>
+        body {
+            font-family: Serif, sans-serif;
+            background:url('/images/berries.jpg');
+            background-size: cover;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-size: 25px;
+            overflow: auto;
+        }
+        .container {
+            width: 500px;
+            background: rgba(52,3,6,255);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            position: relative;
+            z-index: 2;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        input, button {
+            width: calc(90%);
+            padding: 10px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        input {
+            background: white;
+            color: black;
+        }
+        button {
+            font-family: Serif, sans-serif;
+            background: #a48783;
+            color: white;
+            cursor: pointer;
+            font-size: 25px;
+        }
+        button:hover {
+            background: #0b0505;
+        }
+        .floating-calculator {
+            position: absolute;
+            width: 200px;
+            opacity: 0.5;
+            animation: floatAnimation 5s infinite ease-in-out alternate;
+        }
+        @keyframes floatAnimation {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-20px) rotate(5deg); }
+        }
+    </style>
+</head>
+<body>
+    <img src="/images/calcu.png" alt="Floating Calculator" class="floating-calculator" style="top: 10%; left: 10%;">
+    <img src="/images/calcu1.png" alt="Floating Calculator" class="floating-calculator" style="bottom: 10%; right: 10%;">
+    
+    <div class="container" id="introPage">
+        <h2>Welcome to Programming 2 Grade Calculator</h2>
+        <button onclick="startCalculator()">Start Calculating</button>
+    </div>
+
+    <div class="container" id="calculatorPage" style="display: none;">
+        <h2 id="title">Select Grade Calculator</h2>
+        <button onclick="showLecture()">Lecture Grade Calculator</button>
+        <button onclick="showLab()">Laboratory Grade Calculator</button>
+        <button onclick="goBackHome()">Back to Home</button>
+    </div>
+
+    <div class="container" id="formPage" style="display: none;">
+        <h2 id="formTitle">Lecture Grade Calculator</h2>
+        <button onclick="toggleCalculator()" id="switchBtn">Switch to Laboratory Calculator</button>
+        <div id="formContainer"></div>
+        <button onclick="calculateGrade()">Calculate</button>
+        <h3 id="result">Final Grade: </h3>
+        <button onclick="goBack()">Back</button>
+    </div>
+
+    <script>
+        let isLecture = true;
+
+        function startCalculator() {
+            document.getElementById('introPage').style.display = 'none';
+            document.getElementById('calculatorPage').style.display = 'block';
+        }
+
+        function showLecture() {
+            isLecture = true;
+            showForm();
+        }
+
+        function showLab() {
+            isLecture = false;
+            showForm();
+        }
+
+        function showForm() {
+            document.getElementById('calculatorPage').style.display = 'none';
+            document.getElementById('formPage').style.display = 'block';
+            updateForm();
+        }
+
+        function goBack() {
+            document.getElementById('calculatorPage').style.display = 'block';
+            document.getElementById('formPage').style.display = 'none';
+        }
+
+        function goBackHome() {
+            document.getElementById('calculatorPage').style.display = 'none';
+            document.getElementById('introPage').style.display = 'block';
+        }
+
+        function toggleCalculator() {
+            isLecture = !isLecture;
+            updateForm();
+        }
+
+        function updateForm() {
+            document.getElementById('formTitle').innerText = isLecture ? "Lecture Grade Calculator" : "Laboratory Grade Calculator";
+            document.getElementById('switchBtn').innerText = isLecture ? "Switch to Laboratory Calculator" : "Switch to Lecture Calculator";
+            document.getElementById('formContainer').innerHTML = isLecture ? `
+                <label>Exam Score:</label>
+                <input type="number" id="exam" placeholder="Enter exam grade">
+                <label>Essay Quiz:</label>
+                <input type="number" id="essay" placeholder="Enter essay grade">
+                <label>Java Quiz:</label>
+                <input type="number" id="java" placeholder="Enter Java quiz grade">
+                <label>JS Quiz:</label>
+                <input type="number" id="js" placeholder="Enter JS quiz grade">
+                <label>Attendance:</label>
+                <input type="number" id="attendance" placeholder="Enter attendance grade">
+            ` : `
+                <label>Java Exam 1:</label>
+                <input type="number" id="java1" placeholder="Enter Java 1 grade">
+                <label>Java Exam 2:</label>
+                <input type="number" id="java2" placeholder="Enter Java 2 grade">
+                <label>JS Exam 1:</label>
+                <input type="number" id="js1" placeholder="Enter JS 1 grade">
+                <label>JS Exam 2:</label>
+                <input type="number" id="js2" placeholder="Enter JS 2 grade">
+                <label>Machine Problem 1:</label>
+                <input type="number" id="mp1" placeholder="Enter MP1 grade">
+                <label>Machine Problem 2:</label>
+                <input type="number" id="mp2" placeholder="Enter MP2 grade">
+                <label>Machine Problem 3:</label>
+                <input type="number" id="mp3" placeholder="Enter MP3 grade">
+                <label>Documentation:</label>
+                <input type="number" id="doc" placeholder="Enter Documentation grade">
+                <label>Attendance:</label>
+                <input type="number" id="attendance" placeholder="Enter attendance grade">
+            `;
+        }
+    </script>
+</body>
+</html>
